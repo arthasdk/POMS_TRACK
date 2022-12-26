@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="js/jquery.jqtransform.min.js"></script> -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<title>KOPT-Track</title>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<!--Slider-in icons-->
+ <style scoped>
+	.button-success,
+	.button-error,
+	.button-warning,
+	.button-secondary {
+		color: white;
+		border-radius: 4px;
+		text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+	}
+
+	.button-success {
+		background: rgb(28, 184, 65); /* this is a green */
+	}
+
+	.button-error {
+		background: rgb(202, 60, 60); /* this is a maroon */
+	}
+
+	.button-warning {
+		background: rgb(223, 117, 20); /* this is an orange */
+	}
+
+	.button-secondary {
+		background: rgb(66, 184, 221); /* this is a light blue */
+	}
+	table, tbody, th, td {
+  		border: 1px solid;
+	}
+	th, td {
+		padding: 15px;
+		text-align: left;
+	}
+</style>
+</head>
+<body>
+	<h1>POMS Container Checking</h1>
+		<fieldset>
+			<legend>Main Menu :</legend>
+				<div id="showPomsContainer" >
+					<h1>Checking Container Status in POMS Website:</h1>
+					<label for="Containers"><b>Container Numbers : </b></label><br/><br/>
+					<textarea id="contNos" name="contNos" rows="20" cols="15" placeholder="Container_1, Container_2, ... &#13;&#13; **OR** &#13;&#13;Container_1&#13;Container_2&#13;Container_3&#13;... in new lines"></textarea>
+					<br/><br/><label></label><label></label><label></label><button onclick="sendData()" class="pure-button pure-button-primary"> Search </button>
+					
+					<!-- </form> -->
+					<br/><br/><br/><br/><br/><br/>
+					<div id="result">{{recentData}}</div>
+				</div>
+				
+					<br/><br/><br/><br/>
+				</div>
+		</fieldset>
+	
+<script type="text/javascript">
+	function showResults(e){
+		if(e.keyCode === 13){
+			sendData();
+		}
+		return;
+	}
+	
+	function toggleContent(var1) {
+	  // Get the DOM reference
+	  var contentId = document.getElementById(var1);
+	  // Toggle 
+	  contentId.style.display == "block" ? contentId.style.display = "none" : contentId.style.display = "block"; 
+	}
+	
+	function sendData()
+	{
+		var xmlhttp;
+		if (window.XMLHttpRequest){
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp=new XMLHttpRequest();
+		}
+		else{// code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		xmlhttp.onreadystatechange=function(){
+			if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				var res=xmlhttp.responseText;
+				//alert(res);
+				document.getElementById("result").innerHTML=res;
+			}
+		}
+		xmlhttp.open("POST","/PortStatus",true);
+		
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send("&contNos="+document.getElementById("contNos").value);
+	}
+	
+	function copyCust(){
+		jobNo = document.getElementById("jobNo").value;
+		document.body.innerHTML += '<form id="dynForm" action="/updateClientDetails" target="_blank" method="get"><input type="hidden" name="jobNo" value="'+jobNo+'"><input type="hidden" name="isCopy" value="True"></form>';
+		document.getElementById("dynForm").submit();
+	}
+	
+		
+	
+</script>
+</body>
+</html>
