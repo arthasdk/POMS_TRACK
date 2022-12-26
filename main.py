@@ -30,6 +30,7 @@ def Track():
 		contSplits = contReq.split("\n")
 	print(contSplits)
 	s = requests.Session()
+	s.verify = False
 	result = "<table>"
 	nthContainer = 1
 	retry = Retry(connect=3, backoff_factor=1)
