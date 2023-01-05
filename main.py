@@ -46,7 +46,7 @@ def Track():
 	id2 = r2.cookies['oam.Flash.RENDERMAP.TOKEN']
 	print("id2="+str(id2))
 	headers = {'Accept': 'application/xml, text/xml, */*; q=0.01', 'Accept-Language': 'en-US,en;q=0.9', 'Connection': 'keep-alive', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'Faces-Request': 'partial/ajax', 'Sec-Fetch-Dest': 'empty', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Site': 'same-origin', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'X-Requested-With': 'XMLHttpRequest', 'Cookie': 'JSESSIONID='+id1+'; oam.Flash.RENDERMAP.TOKEN=-'+id2+''}
-
+	foundCont = 0
 	
 	for cont in contSplits:
 		print("Current Cont: ["+str(nthContainer) +"]"+cont)
@@ -61,10 +61,11 @@ def Track():
 			print("========== CONT RESPONSE END FROM POMS ================")
 			contData = str(soup.find(id='form1:tblData'))
 			containerFound = soup.find(text='No records found.')
-			print(contData)
-			print("containerFound = "+str(containerFound))
+			#print(contData)
+			#print("containerFound = "+str(containerFound))
 			if (len(contData) > 2318 and containerFound==None):
 				#contData = contData[2318:]
+				foundCont += 1
 				result += "<tr><td role=\"failcell2\">"+str(nthContainer)+"</td><td>" + contData[2318:] + "</tr>"
 			else:
 				contData = str(soup.find(text="No records found."))
@@ -72,10 +73,12 @@ def Track():
 					result += "<tr><td role=\"failcell\">"+str(nthContainer)+"</td><td>"+str(cont)+" - Missing Container - (No records found.)</td></tr>"
 		nthContainer+=1
 	
-	result += '</table>'		
+	result += '</table>'
+	result = "Found "+ str(foundCont) +" of "+ str(nthContainer - 1) +" Containers<br/>" + result	
+	print("Found "+ str(foundCont) +" of "+ str(nthContainer - 1) +" Containers<br/>")	
 	return result 
 
 
 if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=8080, debug=True)
+	app.run(host='0.0.0.0', port=8080, debug=False)
 
