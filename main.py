@@ -6,6 +6,7 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 import logging
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -74,7 +75,10 @@ def Track():
 		nthContainer+=1
 	
 	result += '</table>'
-	result = "Found "+ str(foundCont) +" of "+ str(nthContainer - 1) +" Containers<br/>" + result	
+	now = now = datetime.now()
+	dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+	foundStr =  "<p style='font-size: 150%'>[@ "+str(dt_string)+" ] Result Found :"+ str(foundCont) +" of "+ str(nthContainer - 1) +" Containers <p>"
+	result = foundStr + result	
 	print("Found "+ str(foundCont) +" of "+ str(nthContainer - 1) +" Containers<br/>")	
 	return result 
 
