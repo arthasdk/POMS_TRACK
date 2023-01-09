@@ -55,9 +55,9 @@ def Track():
 			payload = 'javax.faces.partial.ajax=true&javax.faces.source=form1%3AbtnSearch&javax.faces.partial.execute=form1&javax.faces.partial.render=form1&form1%3AbtnSearch=form1%3AbtnSearch&form1%3AcomMloCd_focus=&form1%3AcomMloCd_input=NONE&form1%3AtxtCntNo='+str(cont)+'&form1%3AtblData_scrollState=0%2C0&form1_SUBMIT=1&javax.faces.ViewState=PCsvYkkMUQAmP0zfu2tj7G5AqM%2BXrDH8%2BaG%2FROvEtWIHJyXX'
 			r3 = s.post("https://kdseodb.smportkolkata.in/ccuPomsPosWeb/apps/dos/PosCTS.xhtml", cookies=r.cookies, headers=headers, data=payload)
 			
-			print("========== CONT RESPONSE START FROM POMS ================")
+			print("========== CONT RESPONSE START FROM POMS2 ================")
 			#print(r3.text)
-			soup = bs4.BeautifulSoup(r3.text)
+			soup = bs4.BeautifulSoup(r3.text, "html.parser")
 			#print(soup)
 			print("========== CONT RESPONSE END FROM POMS ================")
 			contData = str(soup.find(id='form1:tblData'))
