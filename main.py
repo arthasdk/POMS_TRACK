@@ -1,10 +1,8 @@
 from flask import Flask, render_template, request, send_file, redirect, url_for, Response, send_from_directory
-import flask
 import requests
 import bs4
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-import logging
 import os
 from datetime import datetime
 
@@ -55,7 +53,7 @@ def Track():
 			payload = 'javax.faces.partial.ajax=true&javax.faces.source=form1%3AbtnSearch&javax.faces.partial.execute=form1&javax.faces.partial.render=form1&form1%3AbtnSearch=form1%3AbtnSearch&form1%3AcomMloCd_focus=&form1%3AcomMloCd_input=NONE&form1%3AtxtCntNo='+str(cont)+'&form1%3AtblData_scrollState=0%2C0&form1_SUBMIT=1&javax.faces.ViewState=PCsvYkkMUQAmP0zfu2tj7G5AqM%2BXrDH8%2BaG%2FROvEtWIHJyXX'
 			r3 = s.post("https://kdseodb.smportkolkata.in/ccuPomsPosWeb/apps/dos/PosCTS.xhtml", cookies=r.cookies, headers=headers, data=payload)
 			
-			print("========== CONT RESPONSE START FROM POMS2 ================")
+			print("========== CONT RESPONSE START FROM POMS ================")
 			#print(r3.text)
 			soup = bs4.BeautifulSoup(r3.text, "html.parser")
 			#print(soup)
