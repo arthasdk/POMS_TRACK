@@ -55,7 +55,7 @@ def Track():
 			
 			print("========== CONT RESPONSE START FROM POMS ================")
 			#print(r3.text)
-			soup = bs4.BeautifulSoup(r3.text, "html.parser")
+			soup = bs4.BeautifulSoup(r3.text, "lxml")
 			#print(soup)
 			print("========== CONT RESPONSE END FROM POMS ================")
 			contData = str(soup.find(id='form1:tblData'))
